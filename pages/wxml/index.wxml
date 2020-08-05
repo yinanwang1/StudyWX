@@ -1,0 +1,10 @@
+<!--pages/wxml/index.wxml-->
+<import src="../index/index.wxml" />
+
+<text>pages/wxml/index.wxml</text>
+
+
+<template is="msgItem" data="{{...item}}"/>
+<template is="msgItem" data="{{...item}}"/>
+<template is="msgItem" data="{{...item}}"/>
+<template is="msgItem" data="{{...item}}"/>

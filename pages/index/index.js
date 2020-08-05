@@ -7,8 +7,19 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
+    name: 'Weixin',
+    array: [1, 2, 3, 4, 5],
+    view: 'MINA',
+    staffA: {firstName: 'Hulk', lastName: 'Hu'},
+    staffB: {firstName: 'Shang', lastName: 'You'},
+    staffC: {firstName: 'Gideon', lastName: 'Lin'},
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
+
+  changename: function(e) {
+    this.setData({name: 'MINA'})
+  },
+
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({

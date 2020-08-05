@@ -1,0 +1,5 @@
+/* pages/wxml/index.wxss */
+
+.userinfo-avatar {
+    margin: 10px;
+}
