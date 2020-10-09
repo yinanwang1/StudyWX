@@ -3,3 +3,19 @@
 .userinfo-avatar {
     margin: 10px;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.viewClass {
+    height: 50rpx;
+    background-color: aqua;
+    margin-left: 10rpx;
+}
+
+.hover {
+    background-color: red;
+}

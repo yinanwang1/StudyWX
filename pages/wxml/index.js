@@ -50,6 +50,28 @@ Page({
         })
     },
 
+    buttonAction: function(e) {
+        // wx.setStorage({
+        //   data: '我就是我',
+        //   key: 'key',
+        //   success: function() {
+        //       console.log('setStorage success')
+        //   },
+        //   fail: function() {
+        //       console.log('setStorage fail')
+        //   }
+        // })
+
+        wx.getStorage({
+          key: 'key',
+          success: function(res) {
+              var value1 = res.data;
+
+              console.log('value1 is ' + value1);
+          }
+        })
+    },
+
     /**
      * Lifecycle function--Called when page load
      */
@@ -75,7 +97,9 @@ Page({
      * Lifecycle function--Called when page hide
      */
     onHide: function () {
-
+        wx.stopPullDownRefresh({
+          success: (res) => {},
+        })
     },
 
     /**
@@ -89,7 +113,7 @@ Page({
      * Page event handler function--Called when user drop down
      */
     onPullDownRefresh: function () {
-
+        console.log("onPullDownRefresh");
     },
 
     /**

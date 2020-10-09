@@ -23,7 +23,8 @@ Page({
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
-      url: '../logs/logs'
+      // url: '../logs/logs?id=123&other=%E7%8E%8B%E7%9B%8A%E5%8D%97'
+      url: '../wxml/index'
     })
   },
   onLoad: function () {

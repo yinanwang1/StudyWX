@@ -4,7 +4,16 @@
 <text>pages/wxml/index.wxml</text>
 
 
-<template is="msgItem" data="{{...item}}"/>
-<template is="msgItem" data="{{...item}}"/>
-<template is="msgItem" data="{{...item}}"/>
-<template is="msgItem" data="{{...item}}"/>
+<view class="container" hover-class="hover">
+    <view class="viewClass">111</view>
+    <view class="viewClass">222</view>
+    <view class="viewClass">333</view>
+
+</view>
+
+<button hover-class="hover" bindtap="buttonAction"> 点击button </button>
+
+<label>
+    <input/>
+    <slot />
+</label>
