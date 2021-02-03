@@ -1,19 +1,53 @@
 <!--pages/wxml/index.wxml-->
 <import src="../index/index.wxml" />
 
-<text>pages/wxml/index.wxml</text>
+<view class="container">
+   
+   <view class="section">       <!-- 第一行 -->
+     <view class="content">
+       <text>蓝牙开关</text>
+     </view>
+     <view class="switch">
+       <switch checked="{{isbluetoothready}}" bindchange="open_BLE" />
+     </view>
+   </view>
+  
+   <view class="section">        <!-- 第二行 -->
+     <button type="default" size="{{primarySize}}" loading="{{searchingstatus}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="search_BLE"> {{searchingstatus?"搜索中":"搜索蓝牙"}} </button>
+   </view>
+  
+   <block wx:for="{{list}}">     <!-- 第三行 -->
+     <view class="section" style="flex-direction:row" >
+       <view>
+         <text>{{index}}:\n </text>
+         <text>设备名称:  {{item.name}}\n</text>
+         <text>MAC地址:   {{item.deviceId}}</text>
+       </view>
+       <view class="connection">
+       <button id="{{item.deviceId}}" size="mini"
+               bindtap="connectTO"> {{deviceconnected?"已连接":"连接"}} </button>
+       </view>
+     </view>
+ </block> 
+  
+ <block wx:if="{{deviceconnected}}">    <!-- 第四行 -->
+     <view >
+       <text>\n\n数据接收\n</text>
+       <text>{{receive_data}}\n</text>
+       <!-- <button size="mini" bindtap="receiveMessages">接收</button> -->
+     </view>
+  
+     <view class="send">
+       <form bindsubmit="formSubmit">
+         <text>\n\n数据发送:</text>
+         <input name="senddata"/>
+         <button size="mini" formType="submit">发送</button>
+         <button size="mini" formType="reset">清空</button>
+       </form>
+     </view>
 
-
-<view class="container" hover-class="hover">
-    <view class="viewClass">111</view>
-    <view class="viewClass">222</view>
-    <view class="viewClass">333</view>
-
-</view>
-
-<button hover-class="hover" bindtap="buttonAction"> 点击button </button>
-
-<label>
-    <input/>
-    <slot />
-</label>
+     <view class="empty">
+     </view>
+ </block>
+  
+ </view>
