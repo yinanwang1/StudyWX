@@ -27,6 +27,11 @@ Page({
   onLoad: function () {
  
   },
+
+  onUnload: function() {
+    this.endInterval()
+  },
+
   open_BLE: function () {
     var that = this
  
@@ -135,7 +140,7 @@ Page({
       })
       //开始搜索附近蓝牙设备
     } else {
-        this.endInterval()
+        that.endInterval()
       //停止搜索附近蓝牙设备
       wx.stopBluetoothDevicesDiscovery({
         success: function (res) {
@@ -152,14 +157,13 @@ Page({
     }
   },
  
-  connectTO: function (e) {
-      console.log("connectTO e is " + JSON.stringify(e));
+  connectTO: function (deviceId) {
     var that = this
       wx.showLoading({
         title: '连接蓝牙设备中...',
       })
       wx.createBLEConnection({
-        deviceId: e.currentTarget.id,
+        deviceId: deviceId,
         success: function (res) {
             console.log("connectTO res is " + JSON.stringify(res));
 
@@ -171,7 +175,7 @@ Page({
           })
           that.setData({
             deviceconnected: true,
-            connectedDeviceId: e.currentTarget.id
+            connectedDeviceId: deviceId
           })
           // 启用 notify 功能
           wx.notifyBLECharacteristicValueChanged({
@@ -306,17 +310,16 @@ Page({
         //获取发现的蓝牙设备
         wx.getBluetoothDevices({
             success: function (res) {
-                for (const index in res.devices) {
-                    if (res.devices.hasOwnProperty(index)) {
-                        console.log("element is " + JSON.stringify(element));
-                        const element = res.devices[index];
-                        if (element.name == that.bleName) {
-                            that.setData({searchingstatus: true})
-                            this.connectTO(element.deviceId)
-                            break
-                        }
-                    }
+              console.log("getBluetoothDevices res is " + JSON.stringify(res));
+              for (i=0; i < res.devices.length; i++) {
+                let element = res.devices[i];
+                if (element && element.name === that.data.bleName) {
+                    that.setData({searchingstatus: true})
+                    that.endInterval()
+                    that.connectTO(element.deviceId)
+                    break
                 }
+              }
             }
           })
           //获取发现的蓝牙设备
@@ -325,8 +328,9 @@ Page({
   },
 
   endInterval: function() {
+    console.log("wyn endInterval");
       var that = this;
-      that.clearInterval(that.data.interval);
+      clearInterval(that.data.interval);
   }
  
 })
