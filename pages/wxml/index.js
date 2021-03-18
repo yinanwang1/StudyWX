@@ -22,7 +22,7 @@ Page({
     list: [],
     receive_data:'none  ',
     interval: '',
-    bleName: 'qeebike_3301000201'
+    bleName: 'qeebike_3301000030'
   },
   onLoad: function () {
  
@@ -178,15 +178,16 @@ Page({
             connectedDeviceId: deviceId
           })
           // 启用 notify 功能
-          wx.notifyBLECharacteristicValueChanged({
+          wx.notifyBLECharacteristicValueChange({
             state: true, 
             deviceId: that.data.connectedDeviceId,
             serviceId: serviceId,
             characteristicId: characteristicIdRead,
             success: function (res) {
- 
+              console.log("notifyBLECharacteristicValueChange is res " + JSON.stringify(res));
             }
           })
+
           // 启用 notify 功能
           // ArrayBuffer转为16进制数
           function ab2hex(buffer) {
@@ -214,6 +215,7 @@ Page({
           //监听回调，接收数据
           wx.onBLECharacteristicValueChange(function (characteristic) {
             var hex = ab2hex(characteristic.value)
+            console.log("hexCharCodeToStr(hex) is " + hexCharCodeToStr(hex));
             that.setData({
               receive_data: hexCharCodeToStr(hex)
             })
@@ -249,8 +251,6 @@ Page({
 
     console.log("formSubmit that.data.connectedDeviceId is " + that.data.connectedDeviceId);
 
-    
-
     wx.getBLEDeviceServices({
       deviceId: that.data.connectedDeviceId,
       success: function(res) {
@@ -261,6 +261,19 @@ Page({
             serviceId: serviceId,
             success: function(res) {
                 console.log("getBLEDeviceCharacteristics res is " + JSON.stringify(res));
+
+                let item = res.characteristics[0];
+
+                // 启用 notify 功能
+          wx.notifyBLECharacteristicValueChange({
+            state: true, 
+            deviceId: that.data.connectedDeviceId,
+            serviceId: serviceId,
+            characteristicId: item.uuid,
+            success: function (res) {
+              console.log("notifyBLECharacteristicValueChange is res " + JSON.stringify(res));
+            }
+          })
 
                 wx.writeBLECharacteristicValue({
                     deviceId: that.data.connectedDeviceId,
